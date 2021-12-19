@@ -1,13 +1,8 @@
-use std::cmp::min;
+use std::collections::HashSet;
+use std::str::Chars;
 
 pub fn run() {
-    let input: Vec<Vec<i32>> = include_str!("day2input")
-        .lines()
-        .map(|l| {
-            let test = l.split("x").map(|i| i.parse::<i32>().unwrap()).collect();
-            println!("{:?}", test);
-            test
-        }).collect();
+    let input: &str = include_str!("day3input");
 
     println!("{:?}", input);
 
@@ -15,21 +10,40 @@ pub fn run() {
     pt2(&input);
 }
 
-fn pt1(input: &Vec<Vec<i32>>) {
-    let result: i32 = input.iter().map(|set| {
-        let (l, w, h) = (set[0], set[1], set[2]);
-        (2 * (l * w)) + (2 * (w * h)) + (2 * (h * l)) + min(min((l * w), (w * h)), (h * l))
-    }).sum();
-    println!("pt1: {}", result)
+#[derive(Eq, PartialEq, Hash)]
+struct Point {
+    x: i32,
+    y: i32
 }
 
-fn pt2(input: &Vec<Vec<i32>>) {
-    let result: i32 = input.iter().map(|set| {
-        let mut set = set.clone();
-        set.sort();
-        let ribbon = (set[0] * 2) + (set[1] * 2);
-        let bow = (set[0] * set[1] * set[2]);
-        ribbon + bow
-    }).sum();
-    println!("pt1: {}", result)
+fn traverse(iter: impl Iterator<Item=char>) -> HashSet<Point> {
+    let origin = Point { x: 0, y: 0 };
+    let (_, visited) = iter.fold((origin, HashSet::new()), |(curr, mut visited), ch| {
+        let x = match ch {
+            '>' => &curr.x + 1,
+            '<' => &curr.x - 1,
+            _ => (&curr.x).clone()
+        };
+        let y = match ch {
+            '^' => &curr.y + 1,
+            'v' => &curr.y - 1,
+            _ => (&curr.y).clone()
+        };
+        visited.insert(curr);
+        (Point { x, y }, visited)
+    });
+    visited
+}
+
+fn pt1(input: &str) {
+    let iter = input.chars();
+    println!("{}", traverse(iter).len());
+}
+
+fn pt2(input: &str) {
+    let mut santa = traverse(input.chars().step_by(2));
+    let robo = traverse(input.chars().skip(1).step_by(2));
+    santa.extend(robo);
+
+    println!("{}", santa.len());
 }

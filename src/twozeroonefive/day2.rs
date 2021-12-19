@@ -3,13 +3,8 @@ use std::cmp::min;
 pub fn run() {
     let input: Vec<Vec<i32>> = include_str!("day2input")
         .lines()
-        .map(|l| {
-            let test = l.split("x").map(|i| i.parse::<i32>().unwrap()).collect();
-            println!("{:?}", test);
-            test
-        }).collect();
-
-    println!("{:?}", input);
+        .map(|l| { l.split("x").map(|i| i.parse::<i32>().unwrap()).collect() })
+        .collect();
 
     pt1(&input);
     pt2(&input);
@@ -31,5 +26,5 @@ fn pt2(input: &Vec<Vec<i32>>) {
         let bow = (set[0] * set[1] * set[2]);
         ribbon + bow
     }).sum();
-    println!("pt1: {}", result)
+    println!("pt2: {}", result)
 }
