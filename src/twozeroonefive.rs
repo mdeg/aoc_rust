@@ -4,12 +4,8 @@ mod day3;
 mod day4;
 mod day8;
 mod day9;
+mod day10;
 
 pub fn run() {
-    //day1::run()
-    //day2::run()
-    //day3::run()
-    //day4::run()
-    // day8::run();
-    day9::run();
+    day10::run();
 }
