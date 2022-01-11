@@ -6,5 +6,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = { version = "1.0.51", features = ["backtrace"] }
+bitvec = "0.22.3"
+graphlib = "0.6.3"
+hex = "0.4.3"
+itertools = "0.10.3"
+nalgebra = "0.29.0"
+ndarray = { version = "0.15.4", features = ["rayon", "blas", "matrixmultiply-threading"] }
+#ndarray-linalg = { version = "0.14.1", features = ["openblas-system"] }
+ureq = "2.3.1"
 md5 = "*"
-itertools = "*"
