@@ -3,7 +3,7 @@ type Sue = (i32, Vec<(String, i32)>);
 pub fn run() {
     let input = include_str!("day16input");
 
-    let mut sue = 1;
+    let mut sue = 0;
     let sues: Vec<Sue> = input.lines().map(|line| {
         let split: Vec<String> = line.split(" ")
             .map(|str| {
@@ -15,16 +15,15 @@ pub fn run() {
             })
             .collect();
 
-        let ret = (
+        sue += 1;
+        (
             sue,
             vec!(
                 (split[2].to_string(), split[3].parse::<i32>().unwrap()),
                 (split[4].to_string(), split[5].parse::<i32>().unwrap()),
                 (split[6].to_string(), split[7].parse::<i32>().unwrap())
             )
-        );
-        sue += 1;
-        ret
+        )
     }).collect();
 
     pt1(&sues);
